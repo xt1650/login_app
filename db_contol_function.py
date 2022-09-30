@@ -1,29 +1,29 @@
 import db_connections
 
-
-## Kullanıcı adı ve şifre kontrolünü sağlar
-## Kullanıcı doğrulama işlemi gerçekleşirse dict('auth':True) döner
-## doğrulama başarısız ise dict('auth':False,'error':'Hata gerekçisi)
-def userAuthControl(username, password):
-    rs = db_connections.cur.execute("SELECT * FROM user where username=:params", dict(params=username))
+rs = db_connections.cur.execute("SELECT * FROM user where email='ahmet1.turhan@diyanet.gov.tr'")
+row = rs.fetchone()
+db_connections.con.commit()
+print (row)
+def userAuthControl(email, password):
+    rs = db_connections.cur.execute("SELECT * FROM user where email=:params", dict(params=email))
     row = rs.fetchone()
     db_connections.con.commit()
-    if row is None:
-        return {'auth': False, 'code': 'Kullanıcı adı bulunamadı'}
-    else:
-        dbHashPassword = row[2]
-        if len(password) == len(dbHashPassword):  # hash uuzunlukları eşit mi
-            i = 0
-            for char in password:
-                if char == dbHashPassword[i]:
-                    i += 1
-                    continue
-                else:
-                    return {'auth': False, 'code': 'Şifre Doğrulama Başarısız'}
+    print(row)
+    if row is  None:
+        return {'auth': False, 'code': 'Kullanici adi bulunamadi.'}
+    dbHashPassword = row[2]
+    if len(password) == len(dbHashPassword):  # hash uzunluklar? e?it mi
+        i = 0
+        for char in password:
+            if char == dbHashPassword[i]:
+                i += 1
+                continue
+            else:
+                return {'auth': False, 'code': 'Sifre Dogrulama Basarisiz'}
 
-            return {'auth': True}
-        else:
-            return {'auth': False, 'code': 'Şifre Uzunlukları eşit değil'}
+        return {'auth': True}
+    else:
+        return {'auth': False, 'code': 'Sifre Uzunluklari esit degil'}
 
 
 
@@ -32,4 +32,4 @@ def userAuthControl(username, password):
 # def userSave()
 #
 #
-# print(userAuthControl('esra.aydin', "1234es"))
+print(userAuthControl('ahmet1.turhan@diyanet.gov.tr', "123456"))
