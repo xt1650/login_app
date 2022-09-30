@@ -1,6 +1,8 @@
 from sqlite3 import connect
 from os.path import abspath, dirname, join, exists
 
+print("deneme")
+
 PATH = dirname(abspath(__file__))
 DB_PATH = join(PATH, 'login_app.db')
 
