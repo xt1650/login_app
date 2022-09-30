@@ -10,6 +10,15 @@ DB_PATH = join(PATH, 'login_app.db')
 def check():
     if not exists(DB_PATH):
         conn = connect('login_app.db')
+        cursor = conn.cursor()
+        cursor.execute("CREATE TABLE IF NOT EXISTS user("
+                    "id integer primary key,"
+                    "email varchar(200) unique not null ,"
+                    "password varchar(255) not null,"
+                    "date timestamp default current_timestamp,"
+                    "state smallint default 0)")
+        conn.commit()
+        cursor.close()
         conn.close()
 
 
