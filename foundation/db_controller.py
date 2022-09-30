@@ -80,19 +80,25 @@ def del_user(u_id):
     else:
         return  {'action':False,'effected':0}
 
-def update_user():
+def update_user(id,newEmail,newPassword):
     conn, cursor = create_connection()
     #! update user information
+
+    cursor.execute("update user "
+                    "set password=:newPass,"
+                    "set email=:newEmail where id=:id", dict(id=id,newPass=newPassword,newEmail=newEmail))
 
     conn.commit()
     cursor.close()
     conn.close()
+    return {'action':True}
 
 
-def get_user_info():
+def get_user_info(email):
     conn, cursor = create_connection()
     # if check_user():
     #     pass
     #! get user information if user exists
-    cursor.close()
-    conn.close()
+    check_user(email)
+
+
