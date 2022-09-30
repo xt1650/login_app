@@ -10,16 +10,28 @@ DB_PATH = join(PATH, 'login_app.db')
 def check():
     if not exists(DB_PATH):
         conn = connect('login_app.db')
+        cursor = conn.cursor()
+        cursor.execute("CREATE TABLE IF NOT EXISTS user("
+                    "id integer primary key,"
+                    "email varchar(200) unique not null ,"
+                    "password varchar(255) not null,"
+                    "date timestamp default current_timestamp,"
+                    "state smallint default 0)")
+        conn.commit()
+        cursor.close()
         conn.close()
 
 
 def create_connection():
+    print('baglanti')
     conn = connect('login_app.db')
     cursor = conn.cursor()
     return (conn, cursor)
 
 
 def check_user(email):
+
+    print(email)
     conn, cursor = create_connection()
     #! check if user exists
     #! and return a boolean based on that information
@@ -28,19 +40,23 @@ def check_user(email):
     conn.commit()
     cursor.close()
     conn.close()
+    
     if data is None:
         return  {'user':False,'data':None,'info':'Kullanici bulunamadi'}
     else:
         return {'user':True,'data':data}
 
 def create_user(email,params):
+    print('create user')
     conn, cursor = create_connection()
+
     # if not check_user():
     #     pass
     #! if user does not exist
     #! add user to the db
     #! with provided information
     rs = check_user(email)
+    print(rs)
     if not rs['user']: #Kullanici yok ise
         cursor.execute("insert into user(email,password) values(:email,:password)",
                        dict(email=params['email'],password=params['password']))
