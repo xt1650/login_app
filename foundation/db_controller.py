@@ -50,17 +50,22 @@ def create_user(email,params):
         return {'status':False, 'info':'Kullanici mevcuttur.Kayit yapilamaz'}
 
 
-def del_user():
+def del_user(u_id):
     conn, cursor = create_connection()
     #! delete user
+    effected_rows = cursor.execute("delete from user where id=:user_id",dict(user_id=u_id)).rowcount
     conn.commit()
     cursor.close()
     conn.close()
-
+    if effected_rows > 0:
+        return {'action':True,'effected':effected_rows}
+    else:
+        return  {'action':False,'effected':0}
 
 def update_user():
     conn, cursor = create_connection()
     #! update user information
+
     conn.commit()
     cursor.close()
     conn.close()
