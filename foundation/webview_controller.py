@@ -2,9 +2,23 @@ from webview import create_window, start
 from front_end_controller import app
 from back_end_controller import Api
 
+
 #! everything comes together in here
-#! and this script will be used as the
-#! entry point for the application
+
+class Controller:
+    def __init__(self):
+        self.js_api = None
+        self.window = None
+        self.window_title = 'login_app'
+
+    def run(self):
+        self.js_api = Api()
+        self.window = create_window(self.window_title)
+        start()
+
+
+# def when_ready(window):
+#     window.evaluate_js("if(window.when_ready){window.when_ready();}")
 
 if __name__ == '__main__':
     api = Api()
