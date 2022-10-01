@@ -17,9 +17,6 @@ class Controller:
         start()
 
 
-# def when_ready(window):
-#     window.evaluate_js("if(window.when_ready){window.when_ready();}")
-
 if __name__ == '__main__':
     api = Api()
     create_window('login app', app, js_api=api)
