@@ -5,22 +5,22 @@ app = Flask(__name__)
 
 @app.route('/')
 def login():
-    #! test for users password
-    #! if its true send user to /info/<user_name>
-    #! if user not found send user to /create_user
+    return render_template('landing.html')
+
+
+@app.route('/login')
+def user_info():
     return render_template('login.html')
 
 
-@app.route('/info/<user_name>')
-def user_info(user_name):
-    #! render user information
-    return render_template('user_info.html')
+@app.route('/sign_up')
+def user_info():
+    return render_template('sign_up.html')
 
 
-@app.route('/create_user')
-def create_user():
-    #! a basic user creation page
-    return render_template('create_user.html')
+@app.route('/change_password')
+def user_info():
+    return render_template('change_password.html')
 
 
 if __name__ == '__main__':
