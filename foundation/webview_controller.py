@@ -13,11 +13,10 @@ class Controller:
 
     def run(self):
         self.js_api = Api()
-        self.window = create_window(self.window_title)
+        self.window = create_window(self.window_title, app, js_api=self.js_api)
         start()
 
 
 if __name__ == '__main__':
-    api = Api()
-    create_window('login app', app, js_api=api)
-    start()
+    controller = Controller()
+    controller.run()

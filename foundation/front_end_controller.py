@@ -4,22 +4,22 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def login():
+def landing():
     return render_template('landing.html')
 
 
 @app.route('/login')
-def user_info():
+def login():
     return render_template('login.html')
 
 
 @app.route('/sign_up')
-def user_info():
+def sigh_up():
     return render_template('sign_up.html')
 
 
 @app.route('/change_password')
-def user_info():
+def change_password():
     return render_template('change_password.html')
 
 

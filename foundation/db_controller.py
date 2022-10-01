@@ -51,12 +51,12 @@ class DB_Controller:
         #! and return a boolean based on that information
         #! if user exits return True
         #! if user does not exist return False
-
+        self.__init__()
         query_result = self.cursor.execute('''
             SELECT * FROM user where username=:params
         ''', dict(params=username))
 
-        return not query_result.fetchall() is None
+        return not query_result.fetchone() is None
 
     def add_user(self, username, password_hash):
         #! if user does not exist
@@ -70,13 +70,16 @@ class DB_Controller:
                     insert into user(username, password) values(:username,:password)
                 ''', dict(username=username, password=password_hash))
                 self.conn.commit()
+                return True
             except IntegrityError as err:
                 #! at this point there is a problem with the integrity of db most probably username constrain is not unique
                 #! code should never reach here with the self.check_user
                 print(f'an integrity error occured as follows >>\n{err}')
+                return False
         else:
             #! user already exists take action accordingly
             print('user already exists in the db')
+            return False
 
     def del_user(self, username, password_hash):
         #! check if user exists
