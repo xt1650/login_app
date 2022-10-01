@@ -56,10 +56,7 @@ class DB_Controller:
             SELECT * FROM user where username=:params
         ''', dict(params=username))
 
-        if not query_result.fetchone() is None:
-            return True
-        else:
-            return False
+        return not query_result.fetchall() is None
 
     def add_user(self, username, password_hash):
         #! if user does not exist
