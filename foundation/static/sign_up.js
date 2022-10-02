@@ -32,10 +32,11 @@ window.addEventListener('pywebviewready', () => {
             // pywebview.api.console_log(user_name_field.value)
             //! if it exists stay in the page and clear username field
             //! if it does not than create the user
-            const res = pywebview.api.add_user(user_name_field.value, hashed_password)
-            pywebview.api.console_log(res)
+            pywebview.api.add_user(user_name_field.value, hashed_password)
+            
             // pywebview.api.console_log(result)
             //! redirect user to login page
+            window.location.href = "/login";
         }
     })
 })

@@ -12,7 +12,7 @@ class Controller:
         self.window_title = 'login_app'
 
     def run(self):
-        self.js_api = Api()
+        self.js_api = Api(controller=self)
         self.window = create_window(self.window_title, app, js_api=self.js_api)
         start()
 

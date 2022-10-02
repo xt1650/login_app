@@ -70,16 +70,16 @@ class DB_Controller:
                     insert into user(username, password) values(:username,:password)
                 ''', dict(username=username, password=password_hash))
                 self.conn.commit()
-                return True
+                return 'success'
             except IntegrityError as err:
                 #! at this point there is a problem with the integrity of db most probably username constrain is not unique
                 #! code should never reach here with the self.check_user
-                print(f'an integrity error occured as follows >>\n{err}')
-                return False
+                # print(f'an integrity error occured as follows >>\n{err}')
+                return 'integrity_error'
         else:
             #! user already exists take action accordingly
-            print('user already exists in the db')
-            return False
+            # print('user already exists in the db')
+            return 'user_exists'
 
     def del_user(self, username, password_hash):
         #! check if user exists
@@ -136,5 +136,5 @@ class DB_Controller:
 
 if __name__ == '__main__':
     db_controller = DB_Controller()
-    db_controller.change_password('flouda', 'Resu123!', 'resu')
+    db_controller.change_password('testuser', 'testpassword', 'resu')
     db_controller.destroy_connection()
