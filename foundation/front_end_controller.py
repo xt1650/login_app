@@ -18,8 +18,8 @@ def sigh_up():
     return render_template('sign_up.html')
 
 
-@app.route('/change_password')
-def change_password():
+@app.route('/change_password/<username>')
+def change_password(username):
     return render_template('change_password.html')
 
 

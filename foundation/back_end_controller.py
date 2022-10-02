@@ -57,8 +57,44 @@ class Api:
         if str(password_hash) == db_password_hash:
             #! password check is successfull
             #! therefore redirect user to change_password page
-            self.controller.window.load_url(base_url + '/change_password')
+            self.controller.window.load_url(
+                base_url + f'/change_password/{username}')
         else:
             #! password check is unsuccessfull
             self.controller.window.load_url(base_url)
             print('wrong password')
+
+    def change_password(self, username, old_password_hash, new_password_hash):
+        current_url = self.controller.window.get_current_url()
+
+        _tmp = ''
+        flag1 = False
+        flag2 = False
+        for char in reversed(current_url):
+            if not flag1 or not flag2:
+                if char == '/':
+                    if flag1:
+                        flag2 = True
+                    else:
+                        flag1 = True
+
+            else:
+                _tmp += char
+        base_url = _tmp[::-1]
+
+        #! check if user exists
+        #! if it does check its passwords are matching
+        #! if passwords do match than update its password with new_password_hash
+        #! than send user to login page
+        #! if passwords do not match tho send user back to landing page
+        #! if user does not exist than send user to /sing_up
+        res = self.db_controller.change_password(
+            username, str(old_password_hash), str(new_password_hash))
+        if res == 'success':
+            self.controller.window.load_url(base_url + '/login')
+        elif res == 'wrong_password':
+            pass
+        elif res == 'user_not_exits':
+            pass
+        else:
+            pass

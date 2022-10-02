@@ -126,15 +126,16 @@ class DB_Controller:
                 self.cursor.execute(
                     "update user set password=:new_password_hash where id=:id", dict(new_password_hash=new_password_hash, id=db_id))
                 self.conn.commit()
+                return 'success'
             else:
                 #! user passwords do not match do not take action
-                print('user password is not right')
+                return 'wrong_password'
         else:
             #! then user does not exist therefore there is nothing to remove from the db
-            print('user does not exists in the db')
+            return 'user_not_exists'
 
 
 if __name__ == '__main__':
     db_controller = DB_Controller()
-    db_controller.change_password('testuser', 'testpassword', 'resu')
+    db_controller.change_password('asdf', '3003444', 'asdf')
     db_controller.destroy_connection()
